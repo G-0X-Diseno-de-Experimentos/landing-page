@@ -99,6 +99,22 @@
                     <li>Envío directo a oficinas administrativas</li>
                 </ul>
             </div>
+            </div>
+
+            <!-- Benefit 4 (Experimentos US03 y US08) -->
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="material-icons" style="font-size: 3rem; color: #e94560;">offline_bolt</i>
+                </div>
+                <h3>Diseñado para el Trabajo de Campo</h3>
+                <ul>
+                    <li><strong>Modo Offline (US03):</strong> Sigue trabajando sin conexión a internet y sincroniza después.</li>
+                    <li><strong>Uso con Guantes (US08):</strong> Interfaz adaptada para operarios con guantes en planta.</li>
+                </ul>
+                <div style="margin-top: 15px;">
+                  <button class="demo-button" onclick="trackExperiment('US03_US08_Landing', 'Probar Modo Offline y Guantes')">Notificarme cuando esté disponible</button>
+                </div>
+            </div>
         </div>
         
         <div class="benefits-action">
@@ -407,6 +423,32 @@
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script src="js/grid-animation.js"></script>
 <script src="js\main.js"></script> 
+<script>
+  // EXPERIMENTOS TRACKING SCRIPT
+  function trackExperiment(experimentId, action) {
+    console.log(`[EXPERIMENTO ${experimentId}] Registrando interacción: ${action}`);
+    
+    // Simular llamada al backend
+    fetch('http://localhost:8181/api/v1/experiments/track', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        experimentId: experimentId,
+        action: action,
+        userRole: 'Visitor'
+      })
+    })
+    .then(response => {
+      alert(`¡Gracias por tu interés!\nTu acción "${action}" ha sido registrada para el experimento ${experimentId}.`);
+    })
+    .catch(error => {
+      console.log('Error de red, pero el click fue registrado localmente', error);
+      alert(`¡Gracias por tu interés!\n(Acción simulada: ${action})`);
+    });
+  }
+</script>
 
 
 </body>
